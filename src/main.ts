@@ -3,14 +3,16 @@ import { AppModule } from './modules/app/app.module'
 import { ValidationPipe } from '@nestjs/common'
 import { NestExpressApplication } from '@nestjs/platform-express'
 import cookieParser from 'cookie-parser'
+import compression from 'compression'
 
 const port = process.env.PORT || 8000
 const globalPrefix = process.env.API_PREFIX || ''
 
 async function bootstrap() {
     const app = await NestFactory.create<NestExpressApplication>(AppModule)
-    app.use(cookieParser)
 
+    app.use(cookieParser)
+    app.use(compression())
     app.useGlobalPipes(
         new ValidationPipe({
             whitelist: true /* Loại bỏ các thuộc tính không khai báo trong DTO */,

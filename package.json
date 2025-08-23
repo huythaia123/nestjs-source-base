@@ -1,8 +1,8 @@
 {
-    "name": "backend_nestjs_source_base_huy_thai",
+    "name": "backend_nestjs_source_base",
     "version": "0.0.1",
-    "description": "",
-    "author": "",
+    "description": "backend nestjs source base",
+    "author": "huy thai",
     "private": true,
     "license": "UNLICENSED",
     "scripts": {
@@ -17,7 +17,11 @@
         "test:watch": "jest --watch",
         "test:cov": "jest --coverage",
         "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-        "test:e2e": "jest --config ./test/jest-e2e.json"
+        "test:e2e": "jest --config ./test/jest-e2e.json",
+        "typeorm": "ts-node -r tsconfig-paths/register ./src/database/data-source.ts",
+        "migration:generate": "npm run typeorm migration:generate ./src/database/migrations/InitialMigration -d ./src/database/data-source.ts",
+        "migration:run": "npm run typeorm migration:run -d ./src/database/data-source.ts",
+        "migration:revert": "npm run typeorm migration:revert -d ./src/database/data-source.ts"
     },
     "dependencies": {
         "@nestjs/axios": "^4.0.1",
@@ -26,13 +30,17 @@
         "@nestjs/core": "^11.0.1",
         "@nestjs/mapped-types": "*",
         "@nestjs/platform-express": "^11.0.1",
+        "@nestjs/typeorm": "^11.0.0",
         "axios": "^1.11.0",
         "class-transformer": "^0.5.1",
         "class-validator": "^0.14.2",
         "compression": "^1.8.1",
         "cookie-parser": "^1.4.7",
+        "pg": "^8.16.3",
+        "prettier-plugin-organize-imports": "^4.2.0",
         "reflect-metadata": "^0.2.2",
-        "rxjs": "^7.8.1"
+        "rxjs": "^7.8.1",
+        "typeorm": "^0.3.26"
     },
     "devDependencies": {
         "@eslint/eslintrc": "^3.2.0",
@@ -46,6 +54,7 @@
         "@types/jest": "^30.0.0",
         "@types/multer": "^2.0.0",
         "@types/node": "^22.10.7",
+        "@types/pg": "^8.15.5",
         "@types/supertest": "^6.0.2",
         "eslint": "^9.18.0",
         "eslint-config-prettier": "^10.0.1",

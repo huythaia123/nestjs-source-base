@@ -26,8 +26,7 @@ export class TypeOrmConfigService implements TypeOrmOptionsFactory {
             synchronize: this.configService.get('database.synchronize', {
                 infer: true,
             }),
-            entities: [process.cwd() + '/src/modules'],
-            migrations: [process.cwd() + '/src/database/migrations/*.{ts,js}'],
+            autoLoadEntities: true,
         }
     }
 }

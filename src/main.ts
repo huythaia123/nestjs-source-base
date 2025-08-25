@@ -3,6 +3,7 @@ import { NestFactory } from '@nestjs/core'
 import { NestExpressApplication } from '@nestjs/platform-express'
 import compression from 'compression'
 import cookieParser from 'cookie-parser'
+import swaggerConfig from './configs/swagger.config'
 import { AppModule } from './modules/app/app.module'
 
 const port = process.env.PORT || 8000
@@ -25,6 +26,9 @@ async function bootstrap() {
     )
     app.setGlobalPrefix(globalPrefix)
     app.enableCors({ credentials: true, origin: true })
+
+    // swagger ----------------------------------------------------------------
+    swaggerConfig(app)
 
     await app.listen(port, () => {
         console.log(`App is running on port ${port}`)

@@ -6,7 +6,6 @@ import databaseConfig from 'src/configs/database.config'
 import jwtConfig from 'src/configs/jwt.config'
 import { TypeOrmConfigService } from 'src/database/typeorm-config.service'
 import { DataSource, DataSourceOptions } from 'typeorm'
-import { AuthModule } from '../auth/auth.module'
 import { UsersModule } from '../users/users.module'
 import { AppController } from './app.controller'
 import { AppService } from './app.service'
@@ -24,7 +23,7 @@ import { AppService } from './app.service'
             },
         }),
         UsersModule,
-        AuthModule,
+        // AuthModule,
     ],
     controllers: [AppController],
     providers: [AppService],

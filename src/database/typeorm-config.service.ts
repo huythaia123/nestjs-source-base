@@ -7,11 +7,9 @@ import { AllConfigType } from 'src/configs/types/all-config.type'
 export class TypeOrmConfigService implements TypeOrmOptionsFactory {
     constructor(private configService: ConfigService<AllConfigType>) {}
 
-    createTypeOrmOptions(
-        connectionName?: string,
-    ): Promise<TypeOrmModuleOptions> | TypeOrmModuleOptions {
-        console.log(__filename, connectionName)
-
+    createTypeOrmOptions():
+        | Promise<TypeOrmModuleOptions>
+        | TypeOrmModuleOptions {
         return {
             type: 'postgres',
             host: this.configService.get('database.host', { infer: true }),

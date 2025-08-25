@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger'
 import { IsEmail, IsString } from 'class-validator'
 
-export class CreateUserDto {
+export class SignUpDto {
     @ApiProperty()
     @IsString()
     username: string
@@ -13,14 +13,4 @@ export class CreateUserDto {
     @ApiProperty()
     @IsString()
     password: string
-
-    // @IsArray()
-    // @ValidateNested({ each: true })
-    // @Type(() => CreateCommentDto)
-    // comments: CreateCommentDto[]
 }
-
-// export class CreateCommentDto {
-//     @IsString()
-//     content: string
-// }

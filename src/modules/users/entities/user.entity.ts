@@ -4,10 +4,13 @@ import { Column, Entity } from 'typeorm'
 @Entity()
 export class User extends BaseModel {
     @Column()
-    firstName: string
+    username: string
+
+    @Column({ unique: true })
+    email: string
 
     @Column()
-    lastName: string
+    password: string
 
     // @OneToMany(() => Comment, (comment) => comment.user, { cascade: true })
     // comments: Comment[]

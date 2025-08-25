@@ -3,6 +3,7 @@ import { NestFactory } from '@nestjs/core'
 import { NestExpressApplication } from '@nestjs/platform-express'
 import compression from 'compression'
 import cookieParser from 'cookie-parser'
+import helmet from 'helmet'
 import swaggerConfig from './configs/swagger.config'
 import { AppModule } from './modules/app/app.module'
 
@@ -12,8 +13,6 @@ const globalPrefix = process.env.API_PREFIX || ''
 async function bootstrap() {
     const app = await NestFactory.create<NestExpressApplication>(AppModule)
 
-    app.use(cookieParser())
-    app.use(compression())
     app.useGlobalPipes(
         new ValidationPipe({
             whitelist: true /* Loại bỏ các thuộc tính không khai báo trong DTO */,
@@ -26,6 +25,9 @@ async function bootstrap() {
     )
     app.setGlobalPrefix(globalPrefix)
     app.enableCors({ credentials: true, origin: true })
+    app.use(cookieParser())
+    app.use(compression())
+    app.use(helmet())
 
     // swagger ----------------------------------------------------------------
     swaggerConfig(app)

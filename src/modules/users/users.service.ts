@@ -21,6 +21,10 @@ export class UsersService {
         return await this.entityManager.findOne(User, { where: { id } })
     }
 
+    public async findOneByEmail(email: string) {
+        return await this.entityManager.findOne(User, { where: { email } })
+    }
+
     public async update(id: number, updateUserDto: UpdateUserDto) {
         const user = await this.entityManager.findOne(User, { where: { id } })
         if (user) {

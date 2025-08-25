@@ -1,26 +1,28 @@
-import { Injectable } from '@nestjs/common'
-import { CreateAuthDto } from './dto/create-auth.dto'
-import { UpdateAuthDto } from './dto/update-auth.dto'
+import { Injectable, UnauthorizedException } from '@nestjs/common'
+import { compare, hash } from 'bcrypt'
+import { UsersService } from '../users/users.service'
+import { SignInDto } from './dto/signin.dto'
+import { SignUpDto } from './dto/signup.dto'
 
 @Injectable()
 export class AuthService {
-    create(createAuthDto: CreateAuthDto) {
-        return 'This action adds a new auth'
+    constructor(private usersService: UsersService) {}
+
+    public async signUp(signUpDto: SignUpDto) {
+        const hashPw = await hash(signUpDto.password, 10)
+        return await this.usersService.create({
+            ...signUpDto,
+            password: hashPw,
+        })
     }
 
-    findAll() {
-        return `This action returns all auth`
-    }
+    public async signIn(signInDto: SignInDto) {
+        const user = await this.usersService.findOneByEmail(signInDto.email)
+        if (!user) throw new UnauthorizedException('signIn')
 
-    findOne(id: number) {
-        return `This action returns a #${id} auth`
-    }
+        const comparePw = await compare(signInDto.password, user.password)
+        if (!comparePw) throw new UnauthorizedException('signIn')
 
-    update(id: number, updateAuthDto: UpdateAuthDto) {
-        return `This action updates a #${id} auth`
-    }
-
-    remove(id: number) {
-        return `This action removes a #${id} auth`
+        return user
     }
 }

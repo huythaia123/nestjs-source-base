@@ -5,6 +5,7 @@ import { JwtPayload } from 'src/common/types'
 import { CreateUserDto } from '../users/dto/create-user.dto'
 import { User } from '../users/entities/user.entity'
 import { UsersService } from '../users/users.service'
+import { SignInDto } from './dto/signin.dto'
 
 @Injectable()
 export class AuthService {
@@ -31,9 +32,10 @@ export class AuthService {
         }
     }
 
-    public async validateUser(email: string, password: string) {
-        const user = await this.usersService.findOneByEmail(email)
-        if (user && (await compare(password, user.password))) return user
+    public async validateUser(signInDto: SignInDto) {
+        const user = await this.usersService.findOneByEmail(signInDto.email)
+        if (user && (await compare(signInDto.password, user.password)))
+            return user
         return null
     }
 }

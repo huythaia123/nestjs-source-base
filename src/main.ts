@@ -1,18 +1,25 @@
-import { ValidationPipe } from '@nestjs/common'
-import { NestFactory } from '@nestjs/core'
+import { ClassSerializerInterceptor, ValidationPipe } from '@nestjs/common'
+import { NestFactory, Reflector } from '@nestjs/core'
 import { NestExpressApplication } from '@nestjs/platform-express'
 import compression from 'compression'
 import cookieParser from 'cookie-parser'
 import helmet from 'helmet'
 import swaggerConfig from './configs/swagger.config'
 import { AppModule } from './modules/app/app.module'
+import { JwtAuthGuard } from './modules/auth/guards/jwt-auth.guard'
 
 const port = process.env.PORT || 8000
 const globalPrefix = process.env.API_PREFIX || ''
 
 async function bootstrap() {
     const app = await NestFactory.create<NestExpressApplication>(AppModule)
+    const reflector = app.get(Reflector)
 
+    app.use(helmet())
+    app.use(compression())
+    app.use(cookieParser())
+    app.useGlobalGuards(new JwtAuthGuard(reflector))
+    app.useGlobalInterceptors(new ClassSerializerInterceptor(reflector))
     app.useGlobalPipes(
         new ValidationPipe({
             whitelist: true /* Loại bỏ các thuộc tính không khai báo trong DTO */,
@@ -23,11 +30,8 @@ async function bootstrap() {
             },
         }),
     )
-    app.setGlobalPrefix(globalPrefix)
     app.enableCors({ credentials: true, origin: true })
-    app.use(cookieParser())
-    app.use(compression())
-    app.use(helmet())
+    app.setGlobalPrefix(globalPrefix)
 
     // swagger ----------------------------------------------------------------
     swaggerConfig(app)

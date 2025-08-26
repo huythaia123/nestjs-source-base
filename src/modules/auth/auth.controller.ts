@@ -1,5 +1,14 @@
-import { Body, Controller, Post, Req, UseGuards } from '@nestjs/common'
+import {
+    Body,
+    Controller,
+    HttpCode,
+    HttpStatus,
+    Post,
+    Req,
+    UseGuards,
+} from '@nestjs/common'
 import { ApiBody, ApiOperation } from '@nestjs/swagger'
+import { Public } from 'src/common/decorators/public.decorator'
 import { CreateUserDto } from '../users/dto/create-user.dto'
 import { User } from '../users/entities/user.entity'
 import { AuthService } from './auth.service'
@@ -10,6 +19,7 @@ export class AuthController {
     constructor(private readonly authService: AuthService) {}
 
     @Post('signup')
+    @Public()
     @ApiOperation({ summary: 'register a new user' })
     @ApiBody({ type: CreateUserDto })
     signUp(@Body() createUserDto: CreateUserDto) {
@@ -17,6 +27,8 @@ export class AuthController {
     }
 
     @Post('signin')
+    @Public()
+    @HttpCode(HttpStatus.OK)
     @UseGuards(LocalAuthGuard)
     @ApiOperation({ summary: 'login user' })
     signIn(@Req() req: { user: User }) {
@@ -27,5 +39,11 @@ export class AuthController {
     // @UseGuards(LocalAuthGuard)
     // async logout(@Req() req) {
     //     return req.logout()
+    // }
+
+    // @Get('profile')
+    // @UseGuards(JwtAuthGuard)
+    // profile(@ReqUser() user: User) {
+    //     return user
     // }
 }

@@ -1,3 +1,11 @@
 export type JwtConfig = {
-    [key: string]: unknown
+    secret?: string
+    privateKey?: string
+    publicKey?: string
+    algorithm?: string
+    keyid?: string
+    expiresIn?: string
+    notBefore?: string
+    audience?: string
+    issuer?: string
 }

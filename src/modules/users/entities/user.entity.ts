@@ -1,3 +1,4 @@
+import { Exclude } from 'class-transformer'
 import { BaseModel } from 'src/common/abstracts/base-model'
 import { Column, Entity } from 'typeorm'
 
@@ -10,6 +11,7 @@ export class User extends BaseModel {
     email: string
 
     @Column()
+    @Exclude({ toPlainOnly: true })
     password: string
 
     // @OneToMany(() => Comment, (comment) => comment.user, { cascade: true })

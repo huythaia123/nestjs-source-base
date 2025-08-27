@@ -6,7 +6,8 @@ export default function <T>(app: INestApplication<T>) {
         .setTitle('Nestjs api docs')
         .setDescription('Nestjs api docs description')
         .addBearerAuth()
+        .addSecurityRequirements('bearer')
         .build()
     const documentFactory = () => SwaggerModule.createDocument(app, config)
-    SwaggerModule.setup('docs', app, documentFactory)
+    SwaggerModule.setup('docs', app, documentFactory, { swaggerOptions: { persistAuthorization: true } })
 }

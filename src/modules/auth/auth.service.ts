@@ -15,14 +15,17 @@ export class AuthService {
     ) {}
 
     public async signUp(createUserDto: CreateUserDto) {
-        const user = await this.usersService.findOneByEmail(createUserDto.email)
+        let user = await this.usersService.findOneByEmail(createUserDto.email)
         if (user) throw new ConflictException('user already exists')
 
         const hashPw = await hash(createUserDto.password, 10)
-        return await this.usersService.create({
+        user = await this.usersService.create({
             ...createUserDto,
             password: hashPw,
         })
+
+        // sign in user into system after sign up
+        return this.signIn(user)
     }
 
     public signIn(user: User) {

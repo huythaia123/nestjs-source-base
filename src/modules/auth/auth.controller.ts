@@ -4,6 +4,7 @@ import { Public } from 'src/common/decorators/public.decorator'
 import { CreateUserDto } from '../users/dto/create-user.dto'
 import { User } from '../users/entities/user.entity'
 import { AuthService } from './auth.service'
+import { SignInDto } from './dto/signin.dto'
 import { LocalAuthGuard } from './guards/local-auth.guard'
 
 @Controller('auth')
@@ -23,6 +24,7 @@ export class AuthController {
     @HttpCode(HttpStatus.OK)
     @UseGuards(LocalAuthGuard)
     @ApiOperation({ summary: 'login user' })
+    @ApiBody({ type: SignInDto })
     signIn(@Req() req: { user: User }) {
         return this.authService.signIn(req.user)
     }

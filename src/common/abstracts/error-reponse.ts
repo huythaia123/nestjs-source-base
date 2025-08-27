@@ -5,6 +5,6 @@ type ErrorResponseConstructor<M = unknown> = {
 }
 export class ErrorResponse<M> {
     constructor(data: ErrorResponseConstructor<M>) {
-        Object.assign(this, data)
+        Object.assign(this, data, { success: data.status && data.status >= 200 && data.status < 300 })
     }
 }

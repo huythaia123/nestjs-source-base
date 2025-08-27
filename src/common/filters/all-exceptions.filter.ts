@@ -1,9 +1,4 @@
-import {
-    ArgumentsHost,
-    Catch,
-    ExceptionFilter,
-    HttpException,
-} from '@nestjs/common'
+import { ArgumentsHost, Catch, ExceptionFilter, HttpException } from '@nestjs/common'
 import { ValidationError } from 'class-validator'
 import { Response } from 'express'
 import { getReasonPhrase, StatusCodes } from 'http-status-codes'
@@ -22,14 +17,8 @@ export class AllExceptionsFilter implements ExceptionFilter {
             return this.httpExceptionFilter.catch(exception, host)
         }
         // catch validation exception
-        if (
-            Array.isArray(exception) &&
-            exception[0] instanceof ValidationError
-        ) {
-            return this.validationExceptionFilter.catch(
-                exception as ValidationError[],
-                host,
-            )
+        if (Array.isArray(exception) && exception.length > 0 && exception[0] instanceof ValidationError) {
+            return this.validationExceptionFilter.catch(exception as ValidationError[], host)
         }
 
         // other exception
@@ -38,13 +27,8 @@ export class AllExceptionsFilter implements ExceptionFilter {
 
         const status = StatusCodes.INTERNAL_SERVER_ERROR
         const error = getReasonPhrase(status)
-        const message =
-            exception instanceof Error
-                ? exception.message
-                : getReasonPhrase(status)
+        const message = exception instanceof Error ? exception.message : getReasonPhrase(status)
 
-        response
-            .status(status)
-            .json(new ErrorResponse({ message, error, status }))
+        response.status(status).json(new ErrorResponse({ message, error, status }))
     }
 }

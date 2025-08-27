@@ -4,10 +4,7 @@ export type GenerateRandomStringOptions = {
     prefix?: string
 }
 
-export function generateRandomString(
-    length: number,
-    opts: GenerateRandomStringOptions = { prefix: '' },
-) {
+export function generateRandomString(length: number, opts: GenerateRandomStringOptions = { prefix: '' }) {
     // if (opts.max && length > opts.max) {
     //     throw new Error('')
     // } else if (opts.min && length < opts.min) {
@@ -15,9 +12,7 @@ export function generateRandomString(
     // }
 
     if (opts.prefix && length < opts.prefix?.length) {
-        throw new Error(
-            `string length {${length}} is less than prefix length {${opts.prefix.length}}`,
-        )
+        throw new Error(`string length {${length}} is less than prefix length {${opts.prefix.length}}`)
     }
     length -= opts.prefix?.length ?? 0
 

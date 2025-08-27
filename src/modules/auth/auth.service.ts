@@ -34,8 +34,7 @@ export class AuthService {
 
     public async validateUser(signInDto: SignInDto) {
         const user = await this.usersService.findOneByEmail(signInDto.email)
-        if (user && (await compare(signInDto.password, user.password)))
-            return user
+        if (user && (await compare(signInDto.password, user.password))) return user
         return null
     }
 }

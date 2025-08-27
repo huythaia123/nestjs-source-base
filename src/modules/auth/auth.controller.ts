@@ -1,12 +1,4 @@
-import {
-    Body,
-    Controller,
-    HttpCode,
-    HttpStatus,
-    Post,
-    Req,
-    UseGuards,
-} from '@nestjs/common'
+import { Body, Controller, HttpCode, HttpStatus, Post, Req, UseGuards } from '@nestjs/common'
 import { ApiBody, ApiOperation } from '@nestjs/swagger'
 import { Public } from 'src/common/decorators/public.decorator'
 import { CreateUserDto } from '../users/dto/create-user.dto'

@@ -12,15 +12,13 @@ export class ValidationExceptionFilter implements ExceptionFilter {
         const ctx = host.switchToHttp()
         const response = ctx.getResponse<Response>()
 
-        const status = StatusCodes.UNPROCESSABLE_ENTITY
+        const status = StatusCodes.BAD_REQUEST
         const error = getReasonPhrase(status)
         const message = exception.map((err) => ({
             field: err.property,
             error: err.constraints,
         }))
 
-        response
-            .status(status)
-            .json(new ErrorResponse({ message, error, status }))
+        response.status(status).json(new ErrorResponse({ message, error, status }))
     }
 }

@@ -1,16 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 import { registerAs } from '@nestjs/config'
-import {
-    IsBoolean,
-    IsInt,
-    IsNumber,
-    IsOptional,
-    IsString,
-    Max,
-    Min,
-    ValidateIf,
-} from 'class-validator'
+import { IsBoolean, IsInt, IsNumber, IsOptional, IsString, Max, Min, ValidateIf } from 'class-validator'
 import { validateConfig } from 'src/utils/validateConfig'
 import { DatabaseConfig } from './types/database-config.type'
 
@@ -88,8 +79,7 @@ export default registerAs<DatabaseConfig>('database', () => {
         synchronize: process.env.DB_SYNCHRONIZE?.toLowerCase() === 'true',
         maxConnections: parseInt(process.env.DB_MAX_CONNECTIONS || '100', 10),
         sslEnabled: process.env.DB_SSL_ENABLED?.toLowerCase() === 'true',
-        rejectUnauthorized:
-            process.env.DB_REJECT_UNAUTHORIZED?.toLowerCase() === 'true',
+        rejectUnauthorized: process.env.DB_REJECT_UNAUTHORIZED?.toLowerCase() === 'true',
         ca: process.env.DB_CA,
         key: process.env.DB_KEY,
         cert: process.env.DB_CERT,

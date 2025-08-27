@@ -1,8 +1,4 @@
-import {
-    ExecutionContext,
-    Injectable,
-    UnauthorizedException,
-} from '@nestjs/common'
+import { ExecutionContext, Injectable, UnauthorizedException } from '@nestjs/common'
 import { Reflector } from '@nestjs/core'
 import { AuthGuard } from '@nestjs/passport'
 import { IS_PUBLIC_KEY } from 'src/common/decorators/public.decorator'
@@ -14,27 +10,19 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
     }
 
     canActivate(context: ExecutionContext) {
-        const isPublic = this.reflector.getAllAndOverride<boolean>(
-            IS_PUBLIC_KEY,
-            [context.getHandler(), context.getClass()],
-        )
+        const isPublic = this.reflector.getAllAndOverride<boolean>(IS_PUBLIC_KEY, [
+            context.getHandler(),
+            context.getClass(),
+        ])
 
         if (isPublic) return true
 
         return super.canActivate(context)
     }
 
-    handleRequest<JwtPayload>(
-        err: unknown,
-        payload: JwtPayload,
-        info: unknown,
-    ) {
+    handleRequest<JwtPayload>(err: unknown, payload: JwtPayload, info: unknown) {
         // console.log(err, payload, info instanceof Error)
-        if (
-            payload &&
-            typeof payload === 'object' &&
-            Object.keys(payload).length > 0
-        ) {
+        if (payload && typeof payload === 'object' && Object.keys(payload).length > 0) {
             return payload
         } else if (err instanceof Error) {
             throw new UnauthorizedException(`Invalid token: ${err.message}`)

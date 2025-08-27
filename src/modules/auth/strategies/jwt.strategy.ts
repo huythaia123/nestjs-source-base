@@ -22,10 +22,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
                 const secret =
                     configService.get('jwt.secret', { infer: true }) ??
                     configService.get('jwt.publicKey', { infer: true })
-                if (!secret)
-                    return done(
-                        new Error('JWT secret or publicKey not configured'),
-                    )
+                if (!secret) return done(new Error('JWT secret or publicKey not configured'))
                 return done(null, secret)
 
                 // Có thể xử lý thêm dựa trên request hoặc rawJwtToken

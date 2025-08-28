@@ -6,6 +6,14 @@ Press **F5** to debug in vscode
 
 ## Script
 
+### Document
+
+View project document in Website
+
+```
+npm run document
+```
+
 ### Database migration
 
 Generate migration file from entities

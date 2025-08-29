@@ -1,10 +1,10 @@
-export type GenerateRandomStringOptions = {
+export type randomStringOptions = {
     // min?: number
     // max?: number
     prefix?: string
 }
 
-export function generateRandomString(length: number, opts: GenerateRandomStringOptions = { prefix: '' }) {
+export function randomString(length: number, opts: randomStringOptions = { prefix: '' }) {
     // if (opts.max && length > opts.max) {
     //     throw new Error('')
     // } else if (opts.min && length < opts.min) {

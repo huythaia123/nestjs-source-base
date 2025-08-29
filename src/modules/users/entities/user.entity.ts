@@ -14,6 +14,9 @@ export class User extends BaseModel {
     @Exclude({ toPlainOnly: true })
     password: string
 
+    @Column({ nullable: true })
+    image: string
+
     // @OneToMany(() => Comment, (comment) => comment.user, { cascade: true })
     // comments: Comment[]
 }

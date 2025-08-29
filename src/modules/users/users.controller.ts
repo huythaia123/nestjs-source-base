@@ -1,5 +1,16 @@
-import { Body, Controller, Delete, Get, Param, Patch } from '@nestjs/common'
+import {
+    Body,
+    Controller,
+    Delete,
+    Get,
+    Param,
+    Patch,
+    Post,
+    UploadedFile,
+    UseInterceptors,
+} from '@nestjs/common'
 import { ApiBody, ApiOperation, ApiParam } from '@nestjs/swagger'
+import { UploadImageInterceptor } from '../../common/interceptors/upload-image.interceptor'
 import { CreateUserDto } from './dto/create-user.dto'
 import { UpdateUserDto } from './dto/update-user.dto'
 import { UsersService } from './users.service'
@@ -41,5 +52,13 @@ export class UsersController {
     @ApiParam({ name: 'id', type: String, description: 'user id' })
     remove(@Param('id') id: string) {
         return this.usersService.remove(+id)
+    }
+
+    @Post(':id/image')
+    @UseInterceptors(UploadImageInterceptor('image'))
+    @ApiOperation({ summary: 'update image for user' })
+    @ApiParam({ name: 'id', type: String, description: 'user id' })
+    image(@UploadedFile() image: Express.Multer.File, @Param('id') id: string) {
+        return this.usersService.image(+id, image)
     }
 }

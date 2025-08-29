@@ -1,12 +1,6 @@
-import {
-    BaseEntity,
-    CreateDateColumn,
-    DeleteDateColumn,
-    PrimaryGeneratedColumn,
-    UpdateDateColumn,
-} from 'typeorm'
+import { CreateDateColumn, DeleteDateColumn, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
 
-export class BaseModel extends BaseEntity {
+export class BaseModel {
     @PrimaryGeneratedColumn()
     id: number
 

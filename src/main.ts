@@ -4,11 +4,11 @@ import { NestExpressApplication } from '@nestjs/platform-express'
 import compression from 'compression'
 import cookieParser from 'cookie-parser'
 import helmet from 'helmet'
+import { AppModule } from './app.module'
 import { AllExceptionsFilter } from './common/filters/all-exceptions.filter'
 import { LoggingInterceptor } from './common/interceptors/logging.interceptor'
 import { ResponseInterceptor } from './common/interceptors/response.interceptor'
 import swaggerConfig from './configs/swagger.config'
-import { AppModule } from './modules/app/app.module'
 import { JwtAuthGuard } from './modules/auth/guards/jwt-auth.guard'
 
 const port = process.env.PORT || 8000

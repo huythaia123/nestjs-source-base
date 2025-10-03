@@ -14,6 +14,9 @@ export class AuthService {
         private jwtService: JwtService,
     ) {}
 
+    /**
+     * this act will create a new user
+     */
     public async signUp(createUserDto: CreateUserDto) {
         let user = await this.usersService.findOneByEmail(createUserDto.email)
         if (user) throw new ConflictException('user already exists')
@@ -28,6 +31,9 @@ export class AuthService {
         return this.signIn(user)
     }
 
+    /**
+     * return token and necessery info
+     */
     public signIn(user: User) {
         const payload: JwtPayload = { sub: user.id.toString() }
         return {
@@ -35,7 +41,10 @@ export class AuthService {
         }
     }
 
-    public async validateUser(signInDto: SignInDto) {
+    /**
+     * check compare email address and password
+     */
+    public async credentials(signInDto: SignInDto) {
         const user = await this.usersService.findOneByEmail(signInDto.email)
         if (user && (await compare(signInDto.password, user.password))) return user
         return null

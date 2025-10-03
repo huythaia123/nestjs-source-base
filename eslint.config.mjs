@@ -26,6 +26,7 @@ export default tseslint.config(
     },
     {
         rules: {
+            'prefer-const': 'off',
             'prettier/prettier': 'off',
             '@typescript-eslint/require-await': 'off',
             '@typescript-eslint/no-unused-vars': 'warn',

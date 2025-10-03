@@ -27,7 +27,7 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
         const signInDto = plainToInstance(SignInDto, { email, password })
         await validateOrReject(signInDto)
 
-        const user = await this.authService.validateUser({ email, password })
+        const user = await this.authService.credentials({ email, password })
         if (user) return user
         throw new UnauthorizedException('Email or password incorect')
     }
